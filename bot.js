@@ -3,6 +3,10 @@ const dotenv = require('dotenv');
 dotenv.config();
 const { Client, Intents, DiscordAPIError, MessageEmbed ,  MessageMentions: { USERS_PATTERN }, MessageSelectMenu} = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+
+const channelID = process.env.CHANNEL_ID;
+const token = process.env.DISCORD_TOKEN;
+
 const prefix = "!";
 
 const lyrics =
@@ -75,6 +79,15 @@ client.on('ready', () => {
     client.user.setPresence({ activities: [{ type: "LISTENING", name:`${prefix}help` }]});
     
     console.log("Set presence to listening for help.");
+    let scheduledMessage = new cron.CronJob('00 00 7 * * *', () => {
+        client.channels.fetch(channelID).then((channel) => {
+            const timeElapsed = Date.now();
+            calculated = calculateDays(timeElapsed);        
+            channel.send("@everyone\n" + calculated);
+        }); 
+    });
+    scheduledMessage.start();
+    console.log("Starting cron job");
 });
 
 client.on('messageCreate', message => {
@@ -157,6 +170,5 @@ client.on('messageCreate', message => {
     }
 });
 
-const token = process.env.DISCORD_TOKEN;
 
 client.login(token);

@@ -11,5 +11,7 @@ Tanker is a discord bot written with NodeJS. The purpose of Tanker is to provide
         - discord.js
     - creating a new bot through the Discord Development Portal
 - Clone this repo.
-- Create a `.env` file, and add a discord token as `DISCORD_TOKEN=####`. Your token will be much longer than 4 characters.
+- Create a `.env` file
+    - Add a discord token as `DISCORD_TOKEN=####`. Your token will be longer than 4 characters.
+    - Add a channel ID as `CHANNEL_ID=####`. Your channel ID will be longer than 4 characters.
 - Run `node bot.js`.
