@@ -140,7 +140,8 @@ client.on('messageCreate', message => {
     if (message.content.startsWith(`${prefix}despair`)){
         const inputArray = message.content.split(" ");
         if (inputArray.length > 1) return message.channel.send("You cannot mention a user");
-        calculated = calculateDays();        
+        const timeElapsed = Date.now();
+        calculated = calculateDays(timeElapsed);        
         message.channel.send(calculated);
     }
 });
