@@ -81,7 +81,7 @@ client.on('ready', () => {
     client.user.setPresence({ activities: [{ type: "LISTENING", name:`${prefix}help` }]});
     
     console.log("Set presence to listening for help.");
-    let scheduledMessage = new cron.CronJob('00 00 7 * * *', () => {
+    let scheduledMessage = new cron.CronJob('0 7 * * *', () => {
         client.channels.fetch(channelID).then((channel) => {
             const timeElapsed = Date.now();
             calculated = calculateDays(timeElapsed);        
