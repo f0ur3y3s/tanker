@@ -96,6 +96,8 @@ client.on('messageCreate', message => {
         toSend += "**!power** - Motivates you";
         toSend += "\n";
         toSend += "**!despair** - Displays the time left until graduation";
+        toSend += "\n";
+        toSend += "**!source** - Displays the github repo of the bot";
         message.channel.send(toSend);
     }
 
@@ -143,6 +145,15 @@ client.on('messageCreate', message => {
         const timeElapsed = Date.now();
         calculated = calculateDays(timeElapsed);        
         message.channel.send(calculated);
+    }
+
+    if (message.content.startsWith(`${prefix}source`)){
+        const inputArray = message.content.split(" ");
+        if (inputArray.length > 1) return message.channel.send("You cannot mention a user");
+        var toSend = "Made with love by f0ur3y3s";
+        toSend += "\n"
+        toSend += "https://github.com/incub4t0r/tanker";
+        message.channel.send(toSend);
     }
 });
 
