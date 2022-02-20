@@ -66,10 +66,6 @@ function calculateDays(timeElapsed){
     var daysSinceArrival = Math.ceil(Math.abs(today - arrivalDate) / (1000 * 60 * 60 * 24));
     var sentencePercentage = ((daysSinceArrival/totalDays)*100).toFixed(2);
 
-    
-
-    toSend += "☀️ Good morning slingers! Today is " + todayDate;
-    toSend += "\n";
     toSend += "🥳 The Class of 2023 has served **" + sentencePercentage + "%** of their total time.";
     toSend += "\n";
     toSend += "🅿️ **" + daysSinceArrival + "** days have passed since our arrival on 01 Jul 2019";
