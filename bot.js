@@ -37,12 +37,21 @@ PUT IN THE HOURS ⌚
 AND TAKE WHATS OURS🥶`;
 
 const fitnessgram = `The FitnessGram™ Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues. The 20 meter pacer test will begin in 30 seconds. Line up at the start. The running speed starts slowly, but gets faster each minute after you hear this signal. [beep] A single lap should be completed each time you hear this sound. [ding] Remember to run in a straight line, and run as long as possible. The second time you fail to complete a lap before the sound, your test is over. The test will begin on the word start. On your mark, get ready, start.`;
+
 const arrivalDate = new Date("Jul 01 2019");
 const gradDate = new Date("May 29 2023");
 const totalDays = Math.ceil(Math.abs(gradDate - arrivalDate) / (1000 * 60 * 60 * 24));
 
 function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
+}
+
+function join(t, a, s) {
+    function format(m) {
+        let f = new Intl.DateTimeFormat('en', m);
+        return f.format(t);
+    }
+    return a.map(format).join(s);
 }
 
 function calculateDays(timeElapsed){
@@ -57,12 +66,16 @@ function calculateDays(timeElapsed){
     var daysSinceArrival = Math.ceil(Math.abs(today - arrivalDate) / (1000 * 60 * 60 * 24));
     var sentencePercentage = ((daysSinceArrival/totalDays)*100).toFixed(2);
 
-    toSend += "The Class of 2023 arrived on 01 JUL 2019, and will graduate on 29 MAY 2023."
+    var dateFormat= [{day: 'numeric'}, {month: 'short'}, {year: 'numeric'}];
+    var todayDate = join(new Date, dateFormat, ' ');
+
+    toSend += "☀️ Good morning slingers! Today is " + todayDate;
     toSend += "\n";
     toSend += "🥳 The Class of 2023 has served **" + sentencePercentage + "%** of their total time.";
     toSend += "\n";
+    toSend += "🅿️ **" + daysSinceArrival + "** days have passed since our arrival on 01 Jul 2019";
     toSend += "\n";
-    toSend += "The time left until graduation are as follows:"
+    toSend += "⏳ The time left until graduation on 29 May 2023 are as follows:"
     toSend += "\n";
     toSend += "     ⏲️ **" + weeksUntilGrad + "** weeks.";
     toSend += "\n";
@@ -81,7 +94,7 @@ client.on('ready', () => {
     client.user.setPresence({ activities: [{ type: "LISTENING", name:`${prefix}help` }]});
     
     console.log("Set presence to listening for help.");
-    let scheduledMessage = new cron.CronJob('0 7 * * *', () => {
+    let scheduledMessage = new cron.CronJob('0 12 * * *', () => {
         client.channels.fetch(channelID).then((channel) => {
             const timeElapsed = Date.now();
             calculated = calculateDays(timeElapsed);        
