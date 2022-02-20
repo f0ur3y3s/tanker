@@ -66,9 +66,9 @@ function calculateDays(timeElapsed){
     var daysSinceArrival = Math.ceil(Math.abs(today - arrivalDate) / (1000 * 60 * 60 * 24));
     var sentencePercentage = ((daysSinceArrival/totalDays)*100).toFixed(2);
 
-    toSend += "🥳 The Class of 2023 has served **" + sentencePercentage + "%** of their total time.";
+    toSend += "🥳 The Class of 2023 has served **" + sentencePercentage + "%** of our total time.";
     toSend += "\n";
-    toSend += "🅿️ **" + daysSinceArrival + "** days have passed since our arrival on 01 Jul 2019";
+    toSend += "🅿️ **" + daysSinceArrival + "** days have passed since our arrival on 01 Jul 2019.";
     toSend += "\n";
     toSend += "⏳ The time left until graduation on 29 May 2023 are as follows:"
     toSend += "\n";
