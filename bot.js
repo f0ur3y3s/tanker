@@ -66,8 +66,7 @@ function calculateDays(timeElapsed){
     var daysSinceArrival = Math.ceil(Math.abs(today - arrivalDate) / (1000 * 60 * 60 * 24));
     var sentencePercentage = ((daysSinceArrival/totalDays)*100).toFixed(2);
 
-    var dateFormat= [{day: 'numeric'}, {month: 'short'}, {year: 'numeric'}];
-    var todayDate = join(new Date, dateFormat, ' ');
+    
 
     toSend += "☀️ Good morning slingers! Today is " + todayDate;
     toSend += "\n";
@@ -97,8 +96,14 @@ client.on('ready', () => {
     let scheduledMessage = new cron.CronJob('0 12 * * *', () => {
         client.channels.fetch(channelID).then((channel) => {
             const timeElapsed = Date.now();
-            calculated = calculateDays(timeElapsed);        
-            channel.send("@everyone\n" + calculated);
+            var calculated = calculateDays(timeElapsed);
+            var dateFormat= [{day: 'numeric'}, {month: 'short'}, {year: 'numeric'}];
+            var todayDate = join(new Date, dateFormat, ' ');
+            var toSend = "@everyone";
+            toSend += "\n";
+            toSend += "☀️ Good morning slingers! Today is " + todayDate;
+            toSend += "\n";
+            channel.send(toSend + calculated);
         }); 
     });
     scheduledMessage.start();
