@@ -39,7 +39,7 @@ AND TAKE WHATS OURS🥶`;
 const fitnessgram = `The FitnessGram™ Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues. The 20 meter pacer test will begin in 30 seconds. Line up at the start. The running speed starts slowly, but gets faster each minute after you hear this signal. [beep] A single lap should be completed each time you hear this sound. [ding] Remember to run in a straight line, and run as long as possible. The second time you fail to complete a lap before the sound, your test is over. The test will begin on the word start. On your mark, get ready, start.`;
 
 const arrivalDate = new Date("Jul 01 2019");
-const gradDate = new Date("May 29 2023");
+const gradDate = new Date("May 27 2023");
 const totalDays = Math.ceil(Math.abs(gradDate - arrivalDate) / (1000 * 60 * 60 * 24));
 
 function delay(time) {
