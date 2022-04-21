@@ -1,4 +1,5 @@
 
+
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -9,7 +10,6 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 
 const channelID = process.env.CHANNEL_ID;
 const token = process.env.DISCORD_TOKEN;
-
 const prefix = "!";
 
 const lyrics =
@@ -127,8 +127,40 @@ client.on('messageCreate', message => {
         toSend += "**!despair** - Displays the time left until graduation";
         toSend += "\n";
         toSend += "**!source** - Displays the github repo of the bot";
+        toSend += "\n";
+        toSend += "**!lmgtfy <@users> [question]** - Googles someone's dumbass question for them. How convenient!";
         message.channel.send(toSend);
     }
+
+    if(message.content.startsWith(`${prefix}lmgtfy`)){
+        const inputArray = message.content.split(" ")
+        
+        var link = "https://googlethatforyou.com?q=";
+        for (let i = 1; i < inputArray.length; i++){
+            const matches = inputArray[i].match(USERS_PATTERN);
+            if (!matches) return message.channel.send("You have either not mentioned anybody or used the wrong name.");
+        }
+        if(inputArray.length == 1) return message.channel.send("Refer to the **!help** why don't ya?")
+        if(inputArray.length == 2) return message.channel.send("You did't ask me to google anything!")
+
+        for(let i = 2; i < inputArray.length; i++){
+            if(i == inputArray.length - 1){
+                link += inputArray[i]
+            }
+            else link += inputArray[i]+"%20"
+        }
+        var dummy = null
+        var tmp = 0
+        message.mentions.users.forEach(user =>{
+            if(tmp == 0){
+                dummy = user
+                tmp = tmp + 1
+            }
+            else tmp = tmp + 1
+        })
+        return message.channel.send("Hey " + dummy.toString() + ", Let me google that for you!: " + link)
+    }
+    
 
     if (message.content.startsWith(`${prefix}pacer`)){
         const inputArray = message.content.split(" ");
