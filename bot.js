@@ -70,7 +70,7 @@ function calculateDays(timeElapsed){
     toSend += "\n";
     toSend += "🅿️ **" + daysSinceArrival + "** days have passed since our arrival on 01 Jul 2019.";
     toSend += "\n";
-    toSend += "⏳ The time left until graduation on 29 May 2023 are as follows:"
+    toSend += "⏳ The time left until graduation on 27 May 2023 are as follows:"
     toSend += "\n";
     toSend += "     ⏲️ **" + weeksUntilGrad + "** weeks.";
     toSend += "\n";
