@@ -10,6 +10,7 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 
 const channelID = process.env.CHANNEL_ID;
 const token = process.env.DISCORD_TOKEN;
+
 const prefix = "!";
 
 const lyrics =
@@ -136,10 +137,10 @@ client.on('messageCreate', message => {
         const inputArray = message.content.split(" ")
         
         var link = "https://googlethatforyou.com?q=";
-        for (let i = 1; i < inputArray.length; i++){
-            const matches = inputArray[i].match(USERS_PATTERN);
-            if (!matches) return message.channel.send("You have either not mentioned anybody or used the wrong name.");
-        }
+        // for (let i = 1; i < inputArray.length; i++){
+        //     const matches = inputArray[i].match(USERS_PATTERN);
+        //     if (!matches) return message.channel.send("You have either not mentioned anybody or used the wrong name.");
+        // }
         if(inputArray.length == 1) return message.channel.send("Refer to the **!help** why don't ya?")
         if(inputArray.length == 2) return message.channel.send("You did't ask me to google anything!")
 
@@ -158,6 +159,12 @@ client.on('messageCreate', message => {
             }
             else tmp = tmp + 1
         })
+        if (dummy == null){
+            const embed = new MessageEmbed()
+                .setDescription("Still no User!!!")
+                .setImage("https://c.tenor.com/bGf86ooPYnQAAAAd/onmyhotline-diamondsonshine.gif")
+            return message.channel.send({ embeds: [embed] })
+        }
         return message.channel.send("Hey " + dummy.toString() + ", Let me google that for you!: " + link)
     }
     
