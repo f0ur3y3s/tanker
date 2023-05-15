@@ -32,6 +32,33 @@ const API_URL = "https://api.openai.com/v1/chat/completions"
 // }
 
 
+async function processChunk(chunk) {
+    const decoder = new TextDecoder("utf-8");
+    const receivedChunk = decoder.decode(chunk);
+    const splitChunk = receivedChunk.split('\n');
+    const promises = splitChunk.map(async (line) =>  {
+        if (line && !line.includes('[DONE]')) {
+            const cleanedLine = line.replace('data: ', '').trim();
+            try {
+                const parsedLine = JSON.parse(cleanedLine);
+                const { choices } = parsedLine;
+                const { delta } = choices[0];
+                const { content } = delta;
+                if (content) {
+                    return content;
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        return '';
+    });
+
+    return await Promise.all(promises).then((contentLines) => {
+        return contentLines.join('');
+    });
+}
+
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('ask')
@@ -70,35 +97,8 @@ module.exports = {
                 if (done) {
                     break;
                 }
-                const receivedChunk = decoder.decode(chunk);
-                const splitChunk = receivedChunk.split("\n");
-                const parsedLines = [];
-                for (const line of splitChunk) {
-                    if (line && !line.includes("[DONE]")) {
-                        const cleanedLine = line.replace("data: ", "").trim();
-                        try {
-                            const parsedLine = JSON.parse(cleanedLine);
-                            parsedLines.push(parsedLine);
-                        } 
-                        catch (e) {
-                            console.log(e);
-                        }
-                    }
-                }
-                // const parsedLines = splitChunk
-                //     .filter((line) => line !== "")
-                //     .map((line) => line.replace('data: ', '').trim())
-                //     .filter((line) => line !== "[DONE]")
-                //     .map((line) => JSON.parse(line));
-                for (const parsedLine of parsedLines) {
-                    const { choices } = parsedLine;
-                    const { delta } = choices[0];
-                    const { content } = delta;
-                    if (content) {
-                        result+=content;
-                        interaction.editReply(result);
-                    }
-                }
+                result += await processChunk(chunk);
+                interaction.editReply(result);
             }
         } catch (e) {
             console.error("Error: ", e);
