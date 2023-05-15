@@ -87,7 +87,7 @@ function dailyMessage(){
 // We use 'c' for the event parameter to keep it separate from the already defined 'client'
 client.once(Events.ClientReady, c => {
 	console.log(`Ready! Logged in as ${c.user.tag}`);
-    cron.schedule('* * * * *', () => {
+    cron.schedule('0 12 * * *', () => {
         dailyMessage();
     });
     console.log("Starting cron job");
